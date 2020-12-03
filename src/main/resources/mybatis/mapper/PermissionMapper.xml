@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.example.practicevue.entity.Permission">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="controller" jdbcType="VARCHAR" property="controller"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="level" jdbcType="CHAR" property="level"/>
+    </resultMap>
+
+    <resultMap id="leftMenus" type="com.example.practicevue.model.MenusDTO">
+        <id column="id" javaType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="authName"/>
+        <collection property="children" ofType="com.example.practicevue.model.MenusDTO">
+            <result column="pid" javaType="INTEGER" property="id"/>
+            <result column="pname" jdbcType="VARCHAR" property="authName"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="allPermissionList" type="com.example.practicevue.model.PermissionListDTO">
+        <result column="id" jdbcType="INTEGER" property="id"></result>
+        <result column="name" jdbcType="VARCHAR" property="authName"></result>
+        <result column="level" jdbcType="VARCHAR" property="level"></result>
+        <result column="pid" jdbcType="INTEGER" property="pid"></result>
+        <result column="ps_api_path" jdbcType="VARCHAR" property="path"></result>
+    </resultMap>
+
+    <resultMap id="menusDTO" type="com.example.practicevue.model.MenusDTO">
+        <id column="id" javaType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="authName"/>
+        <result column="ps_api_path" jdbcType="VARCHAR" property="path"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+    </resultMap>
+
+    <select id="getLeftMenus" resultMap="leftMenus">
+        SELECT
+            a.id, a.NAME,
+            b.id pid, b.NAME pname
+        FROM
+            `sp_permission` a,
+            `sp_permission` b
+        WHERE
+            a.id = b.pid AND a.`level` = '0' AND b.`level` = '1'
+        ORDER BY
+            id,
+            pid ASC
+  </select>
+
+    <select id="allPermissionList" resultMap="allPermissionList">
+        SELECT p.id, p.`name`, p.`level`, p.pid, a.ps_api_path
+        FROM sp_permission p
+        LEFT JOIN sp_permission_api a ON p.id = a.ps_id
+        ORDER BY id ASC
+    </select>
+
+    <select id="superMenuList" resultMap="menusDTO" parameterType="List">
+        SELECT id, `name`, pid
+        FROM sp_permission
+        WHERE pid = 0
+        <if test="list != null">
+            AND id IN
+            <foreach collection="list" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY id
+    </select>
+
+    <select id="allMenuList" resultMap="menusDTO" parameterType="List">
+        SELECT id, `name`, pid
+        FROM sp_permission
+        <if test="list != null">
+            WHERE id IN
+            <foreach collection="list" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY id
+    </select>
+</mapper>

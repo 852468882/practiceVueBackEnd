@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.Order">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="pay" jdbcType="CHAR" property="pay" />
+    <result column="is_send" jdbcType="CHAR" property="isSend" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="fapiao_title" jdbcType="CHAR" property="fapiaoTitle" />
+    <result column="fapiao_company" jdbcType="VARCHAR" property="fapiaoCompany" />
+    <result column="fapiao_content" jdbcType="VARCHAR" property="fapiaoContent" />
+    <result column="pay_status" jdbcType="CHAR" property="payStatus" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+    <result column="consignee_addr" jdbcType="LONGVARCHAR" property="consigneeAddr" />
+  </resultMap>
+</mapper>

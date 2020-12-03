@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.GoodsCatsMapper">
+  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.GoodsCats">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_show" jdbcType="TINYINT" property="isShow" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+  </resultMap>
+</mapper>

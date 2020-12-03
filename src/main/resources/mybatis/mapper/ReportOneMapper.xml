@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.ReportOneMapper">
+  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.ReportOne">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rp1_user_count" jdbcType="INTEGER" property="rp1UserCount" />
+    <result column="rp1_area" jdbcType="VARCHAR" property="rp1Area" />
+    <result column="rp1_date" jdbcType="DATE" property="rp1Date" />
+  </resultMap>
+</mapper>

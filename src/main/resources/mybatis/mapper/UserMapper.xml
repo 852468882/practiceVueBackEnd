@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="qq_open_id" jdbcType="CHAR" property="qqOpenId" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_email_code" jdbcType="CHAR" property="userEmailCode" />
+    <result column="is_active" jdbcType="CHAR" property="isActive" />
+    <result column="user_sex" jdbcType="CHAR" property="userSex" />
+    <result column="user_qq" jdbcType="VARCHAR" property="userQq" />
+    <result column="user_tel" jdbcType="VARCHAR" property="userTel" />
+    <result column="user_xueli" jdbcType="CHAR" property="userXueli" />
+    <result column="user_hobby" jdbcType="VARCHAR" property="userHobby" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user_introduce" jdbcType="LONGVARCHAR" property="userIntroduce" />
+  </resultMap>
+
+
+</mapper>

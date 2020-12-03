@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.practicevue.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.Goods">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="weight" jdbcType="SMALLINT" property="weight" />
+    <result column="cat_id" jdbcType="SMALLINT" property="catId" />
+    <result column="big_logo" jdbcType="CHAR" property="bigLogo" />
+    <result column="small_logo" jdbcType="CHAR" property="smallLogo" />
+    <result column="is_del" jdbcType="CHAR" property="isDel" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="upd_time" jdbcType="INTEGER" property="updTime" />
+    <result column="delete_time" jdbcType="INTEGER" property="deleteTime" />
+    <result column="cat_one_id" jdbcType="SMALLINT" property="catOneId" />
+    <result column="cat_two_id" jdbcType="SMALLINT" property="catTwoId" />
+    <result column="cat_three_id" jdbcType="SMALLINT" property="catThreeId" />
+    <result column="hot_mumber" jdbcType="INTEGER" property="hotMumber" />
+    <result column="is_promote" jdbcType="SMALLINT" property="isPromote" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
+  </resultMap>
+</mapper>

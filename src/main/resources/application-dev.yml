@@ -1,0 +1,25 @@
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    # 控制台打印mybatis操作日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  # 数据源
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vue_shop?useSSL=false&allowMultiQueries=true
+    username: root
+    password: 59864747
+
+#pagehelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+
+
+#jwt
+jwt:
+  key: login
+  failureTime: 1000 * 60 * 60
