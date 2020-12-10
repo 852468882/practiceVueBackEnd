@@ -3,9 +3,7 @@ package com.example.practicevue;
 import com.alibaba.fastjson.JSONObject;
 import com.example.practicevue.entity.Permission;
 import com.example.practicevue.entity.Role;
-import com.example.practicevue.mapper.ManagerMapper;
-import com.example.practicevue.mapper.PermissionMapper;
-import com.example.practicevue.mapper.RoleMapper;
+import com.example.practicevue.mapper.*;
 import com.example.practicevue.model.MenusDTO;
 import com.example.practicevue.model.PermissionListDTO;
 import com.example.practicevue.model.RolePermissionDTO;
@@ -34,6 +32,12 @@ public class SpringTest {
     private ManagerMapper managerMapper;
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private GoodsMapper goodsMapper;
+    @Resource
+    private AttributeMapper attributeMapper;
+    @Resource
+    private CategoryMapper categoryMapper;
 
     @Test
     public void t1(){
@@ -87,6 +91,10 @@ public class SpringTest {
 
         List<String> strings = getdeleteList("101");
         System.out.println(strings);
+    }
+
+    @Test
+    public void updatesp_goods_attr(){
     }
 
 

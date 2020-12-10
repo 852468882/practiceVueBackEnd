@@ -1,70 +1,60 @@
-package com.example.practicevue.entity;
+package com.example.practicevue.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author zcy
+ * @date 2020/12/4
+ */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "`sp_goods_attr`")
-public class GoodsAttr {
+public class GoodsAttrDTO extends BaseDTO{
     /**
      * 主键id
      */
-    @Id
-    @Column(name = "`id`")
-    @GeneratedValue(generator = "JDBC")
     private Integer id;
 
     /**
      * 属性名称
      */
-    @Column(name = "`name`")
     private String name;
 
     /**
      * 外键，商品id
      */
-    @Column(name = "`goods_id`")
     private Integer goodsId;
 
     /**
      * 外键，类型id
      */
-    @Column(name = "`cat_id`")
     private Integer catId;
 
     /**
      * only:输入框(唯一)  many:后台下拉列表/前台单选框
      */
-    @Column(name = "`sel`")
     private String sel;
 
     /**
      * manual:手工录入  list:从列表选择
      */
-    @Column(name = "`write`")
     private String write;
 
     /**
      * 该属性需要额外增加的价钱
      */
-    @Column(name = "`add_price`")
     private BigDecimal addPrice;
 
     /**
      * 删除时间标志
      */
-    @Column(name = "`delete_time`")
     private Date deleteTime;
 
     /**
      * 可选值列表信息,例如颜色：白色,红色,绿色,多个可选值通过逗号分隔
      */
-    @Column(name = "`vals`")
     private String vals;
 }

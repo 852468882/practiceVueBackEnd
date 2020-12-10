@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.practicevue.mapper.CategoryMapper">
-  <resultMap id="BaseResultMap" type="com.example.practicevue.entity.Category">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="pid" jdbcType="INTEGER" property="pid" />
-    <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="src" jdbcType="LONGVARCHAR" property="src" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.example.practicevue.entity.Category">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="src" jdbcType="LONGVARCHAR" property="src"/>
+    </resultMap>
+
+    <select id="getAllCategoriesByLevel" resultType="com.example.practicevue.model.CategoryDTO" parameterType="List">
+        SELECT c.id,c.`name`,c.pid,c.`level`,
+            CASE c.deleted WHEN 1 THEN true ELSE false END deleted
+        FROM `sp_category` c
+        WHERE c.`level` IN
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        ORDER BY c.id
+    </select>
+
+    <select id="getSuperCategories" resultType="com.example.practicevue.model.CategoryDTO">
+        SELECT c.id,c.`name`,c.pid,c.`level`,
+            CASE c.deleted WHEN 1 THEN true ELSE false END deleted
+        FROM `sp_category` c
+        WHERE c.`level` = 0
+        ORDER BY c.id
+    </select>
+
+    <update id="deleteCategoriesByIds" parameterType="list">
+        UPDATE sp_category SET deleted = #{isDelete} WHERE id IN
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

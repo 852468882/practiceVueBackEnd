@@ -17,6 +17,7 @@ import java.util.Map;
  * @date 2020/11/13
  */
 @RestController
+@RequestMapping(value = "/roles")
 public class RoleController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class RoleController {
     /**
      * 获取角色列表
      */
-    @RequestMapping(value = "/roleList", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public APIResponse<List<Role>> roleList(){
         return APIResponse.success(roleService.getRoleList());
     }
@@ -33,7 +34,7 @@ public class RoleController {
     /**
      * 权限角色列表
      */
-    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public APIResponse<List<RolePermissionDTO>> rolePermissions() {
         List<RolePermissionDTO> allRoles = roleService.getRolePermissions();
         return APIResponse.success(allRoles);
@@ -42,7 +43,7 @@ public class RoleController {
     /**
      * 添加角色
      */
-    @RequestMapping(value = "/roles", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public APIResponse<RoleDTO> createRole(@RequestBody Role role) {
         return roleService.createRole(role);
     }
@@ -50,7 +51,7 @@ public class RoleController {
     /**
      * 根据 ID 查询角色
      */
-    @RequestMapping(value = "/roles/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public APIResponse<RoleDTO> getRoleById(@PathVariable Integer id) {
         return roleService.getRoleById(id);
     }
@@ -58,7 +59,7 @@ public class RoleController {
     /**
      * 编辑提交角色
      */
-    @RequestMapping(value = "/roles", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public APIResponse<RoleDTO> editRole(@RequestBody Role role) {
         return roleService.editRole(role);
     }
@@ -66,7 +67,7 @@ public class RoleController {
     /**
      * 删除角色
      */
-    @RequestMapping(value = "/roles/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public APIResponse<RoleDTO> deleteRole(@PathVariable Integer id) {
         return roleService.deleteRole(id);
     }
@@ -74,7 +75,7 @@ public class RoleController {
     /**
      * 角色授权
      */
-    @RequestMapping(value = "/roles/{id}/rights", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/rights", method = RequestMethod.POST)
     public APIResponse<RoleDTO> authorizeRole(@PathVariable Integer id, @RequestBody Map<String, String> psIds) {
         String rids = psIds.get("rids");
         return roleService.authorizeRole(id, rids);
@@ -83,7 +84,7 @@ public class RoleController {
     /**
      * 删除角色指定权限
      */
-    @RequestMapping(value = "/roles/{id}/rights/{rightId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/rights/{rightId}", method = RequestMethod.DELETE)
     public APIResponse<List<MenusDTO>> deletePermission(@PathVariable Integer id, @PathVariable String rightId) {
         return roleService.deletePermission(id, rightId);
     }

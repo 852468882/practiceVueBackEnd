@@ -90,29 +90,11 @@
         </javaClientGenerator>
 
 
-        <!--<table tableName="sp_goods_pics" domainObjectName="GoodsPics">
+        <table tableName="sp_attribute" domainObjectName="Attribute">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-        <table tableName="sp_order" domainObjectName="Order">
+        <table tableName="sp_goods_attr" domainObjectName="GoodsAttr">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-        <table tableName="sp_order_goods" domainObjectName="OrderGoods">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="sp_report_1" domainObjectName="ReportOne">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="sp_report_2" domainObjectName="ReportTwo">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="sp_report_3" domainObjectName="ReportThree">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="sp_type" domainObjectName="Type">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table tableName="sp_user_cart" domainObjectName="UserCart">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>-->
     </context>
 </generatorConfiguration>

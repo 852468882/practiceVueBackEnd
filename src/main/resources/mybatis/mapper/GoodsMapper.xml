@@ -9,20 +9,91 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="number" jdbcType="INTEGER" property="number" />
-    <result column="weight" jdbcType="SMALLINT" property="weight" />
-    <result column="cat_id" jdbcType="SMALLINT" property="catId" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="cat_id" jdbcType="INTEGER" property="catId" />
     <result column="big_logo" jdbcType="CHAR" property="bigLogo" />
     <result column="small_logo" jdbcType="CHAR" property="smallLogo" />
     <result column="is_del" jdbcType="CHAR" property="isDel" />
-    <result column="add_time" jdbcType="INTEGER" property="addTime" />
-    <result column="upd_time" jdbcType="INTEGER" property="updTime" />
-    <result column="delete_time" jdbcType="INTEGER" property="deleteTime" />
-    <result column="cat_one_id" jdbcType="SMALLINT" property="catOneId" />
-    <result column="cat_two_id" jdbcType="SMALLINT" property="catTwoId" />
-    <result column="cat_three_id" jdbcType="SMALLINT" property="catThreeId" />
-    <result column="hot_mumber" jdbcType="INTEGER" property="hotMumber" />
-    <result column="is_promote" jdbcType="SMALLINT" property="isPromote" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="cat_one_id" jdbcType="INTEGER" property="catOneId" />
+    <result column="cat_two_id" jdbcType="INTEGER" property="catTwoId" />
+    <result column="cat_three_id" jdbcType="INTEGER" property="catThreeId" />
+    <result column="hot_number" jdbcType="INTEGER" property="hotNumber" />
+    <result column="is_promote" jdbcType="INTEGER" property="isPromote" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
   </resultMap>
+  
+  <resultMap id="selectGoodsById" type="com.example.practicevue.model.GoodsDTO">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
+    <result column="big_logo" jdbcType="CHAR" property="bigLogo" />
+    <result column="small_logo" jdbcType="CHAR" property="smallLogo" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="hot_number" jdbcType="INTEGER" property="hotNumber" />
+    <result column="is_promote" jdbcType="INTEGER" property="isPromote" />
+    <collection property="pics" ofType="com.example.practicevue.model.GoodsPicsDTO">
+      <result column="pics_id" jdbcType="INTEGER" property="id" />
+      <result column="id" jdbcType="INTEGER" property="goodsId" />
+      <result column="big" jdbcType="CHAR" property="big" />
+      <result column="mid" jdbcType="CHAR" property="mid" />
+      <result column="small" jdbcType="CHAR" property="small" />
+    </collection>
+    <collection property="attrs" ofType="com.example.practicevue.model.GoodsAttrDTO">
+      <result column="attr_id" jdbcType="INTEGER" property="id" />
+      <result column="id" jdbcType="INTEGER" property="goodsId" />
+      <result column="attr_value" jdbcType="LONGVARCHAR" property="attrValue" />
+      <result column="add_price" jdbcType="DECIMAL" property="addPrice" />
+      <result column="attr_name" jdbcType="VARCHAR" property="name" />
+      <result column="sel" jdbcType="CHAR" property="sel" />
+      <result column="write" jdbcType="CHAR" property="write" />
+      <result column="vals" jdbcType="LONGVARCHAR" property="vals" />
+    </collection>
+  </resultMap>
+
+  <select id="selectGoodsById" resultMap="selectGoodsById">
+    SELECT
+      g.id,
+      g.`name`,
+      g.price,
+      g.number,
+      g.weight,
+      g.introduce,
+      g.big_logo,
+      g.small_logo,
+      g.state,
+      g.add_time,
+      g.upd_time,
+      g.hot_number,
+      g.is_promote,
+
+      gp.id pics_id,
+      gp.big,
+      gp.mid,
+      gp.small,
+
+      ga.attr_id,
+      ga.attr_value,
+      ga.add_price,
+
+      a.`name` attr_name,
+      a.sel,
+      a.`write`,
+      a.vals
+    FROM
+      `sp_goods` g
+      LEFT JOIN sp_goods_pics gp ON gp.goods_id = g.id
+      LEFT JOIN sp_goods_attr ga ON ga.goods_id = g.id
+      LEFT JOIN sp_attribute a ON ga.attr_id = a.id
+    WHERE
+      g.id = #{id}
+  </select>
 </mapper>

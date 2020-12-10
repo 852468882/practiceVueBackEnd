@@ -47,10 +47,10 @@ public class PermissionServiceImpl implements PermissionService {
     /**
      * 递归获取子菜单树
      */
-    private List<MenusDTO> childMenuTree(Integer parentId, List<MenusDTO> allMenuList){
+    private List<MenusDTO> childMenuTree(Integer id, List<MenusDTO> allMenuList){
         List<MenusDTO> menuTree = new ArrayList<>();
         for (MenusDTO menusDTO : allMenuList) {
-            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(parentId)){
+            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(id)){
                 menuTree.add(menusDTO);
             }
         }

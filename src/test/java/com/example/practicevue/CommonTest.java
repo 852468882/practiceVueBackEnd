@@ -1,9 +1,13 @@
 package com.example.practicevue;
 
+import com.example.practicevue.utils.DateFormatUtil;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +38,18 @@ public class CommonTest {
     }
 
     @Test
+    @SneakyThrows
     public void t3(){
+        Date date = new Date(1514259368);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(date);
+        System.out.println(format);
+        System.out.println(DateFormatUtil.timestamp2calender(Long.valueOf("1514259365")));
+        System.out.println(DateFormatUtil.calender2timestamp("2020-12-04 17:00:00"));
+    }
+
+    @Test
+    public void t4(){
+
     }
 }

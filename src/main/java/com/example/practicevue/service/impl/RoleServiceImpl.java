@@ -184,10 +184,10 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 递归获取子菜单树
      */
-    private List<MenusDTO> childMenuTree(Integer parentId, List<MenusDTO> allMenuList) {
+    private List<MenusDTO> childMenuTree(Integer id, List<MenusDTO> allMenuList) {
         List<MenusDTO> menuTree = new ArrayList<>();
         for (MenusDTO menusDTO : allMenuList) {
-            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(parentId)) {
+            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(id)) {
                 menuTree.add(menusDTO);
             }
         }
@@ -208,11 +208,11 @@ public class RoleServiceImpl implements RoleService {
     private List<String> getDeleteList(String pid, List<MenusDTO> menusDTOList) {
         List<String> deleteList = new ArrayList<>();
         deleteList.add(pid);
-        menusDTOList.forEach(menusDTO -> {
+        for (MenusDTO menusDTO : menusDTOList) {
             if (pid.equals(menusDTO.getPid() + "")) {
                 deleteList.addAll(getDeleteList(menusDTO.getId() + "", menusDTOList));
             }
-        });
+        }
         return deleteList;
     }
 

@@ -1,7 +1,12 @@
 package com.example.practicevue.entity;
 
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Table(name = "`sp_attribute`")
@@ -12,41 +17,29 @@ public class Attribute {
     @Id
     @Column(name = "`id`")
     @GeneratedValue(generator = "JDBC")
-    private Short id;
+    private Integer id;
 
     /**
-     * 属性名称
+     * 商品id
      */
-    @Column(name = "`name`")
-    private String name;
+    @Column(name = "`goods_id`")
+    private Integer goodsId;
 
     /**
-     * 外键，类型id
+     * 属性id
      */
-    @Column(name = "`cat_id`")
-    private Short catId;
+    @Column(name = "`attr_id`")
+    private Short attrId;
 
     /**
-     * only:输入框(唯一)  many:后台下拉列表/前台单选框
+     * 该属性需要额外增加的价钱
      */
-    @Column(name = "`sel`")
-    private String sel;
+    @Column(name = "`add_price`")
+    private BigDecimal addPrice;
 
     /**
-     * manual:手工录入  list:从列表选择
+     * 商品对应属性的值
      */
-    @Column(name = "`write`")
-    private String write;
-
-    /**
-     * 删除时间标志
-     */
-    @Column(name = "`delete_time`")
-    private Integer deleteTime;
-
-    /**
-     * 可选值列表信息,例如颜色：白色,红色,绿色,多个可选值通过逗号分隔
-     */
-    @Column(name = "`vals`")
-    private String vals;
+    @Column(name = "`attr_value`")
+    private String attrValue;
 }

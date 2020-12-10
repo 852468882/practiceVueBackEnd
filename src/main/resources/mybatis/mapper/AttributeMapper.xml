@@ -5,12 +5,10 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="SMALLINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="cat_id" jdbcType="SMALLINT" property="catId" />
-    <result column="sel" jdbcType="CHAR" property="sel" />
-    <result column="write" jdbcType="CHAR" property="write" />
-    <result column="delete_time" jdbcType="INTEGER" property="deleteTime" />
-    <result column="vals" jdbcType="LONGVARCHAR" property="vals" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="attr_id" jdbcType="SMALLINT" property="attrId" />
+    <result column="add_price" jdbcType="DECIMAL" property="addPrice" />
+    <result column="attr_value" jdbcType="LONGVARCHAR" property="attrValue" />
   </resultMap>
 </mapper>
