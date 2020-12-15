@@ -1,6 +1,5 @@
 package com.example.practicevue.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.example.practicevue.common.APIResponse;
 import com.example.practicevue.entity.Role;
 import com.example.practicevue.mapper.PermissionMapper;
@@ -9,7 +8,6 @@ import com.example.practicevue.model.MenusDTO;
 import com.example.practicevue.model.RoleDTO;
 import com.example.practicevue.model.RolePermissionDTO;
 import com.example.practicevue.service.RoleService;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ import java.util.List;
  * @date 2020/11/13
  */
 @Service
-@Slf4j
 public class RoleServiceImpl implements RoleService {
 
     @Resource
@@ -91,9 +88,9 @@ public class RoleServiceImpl implements RoleService {
                 dto.setId(role.getId());
                 dto.setRoleName(role.getRoleName());
                 dto.setRoleDesc(role.getRoleDesc());
-                apiResponse = APIResponse.success("修改成功", dto);
+                apiResponse = APIResponse.updated();
             } else {
-                apiResponse = APIResponse.fail("修改失败");
+                apiResponse = APIResponse.fail();
             }
         }
         return apiResponse;
@@ -104,9 +101,9 @@ public class RoleServiceImpl implements RoleService {
         APIResponse<RoleDTO> apiResponse;
         int i = roleMapper.deleteByPrimaryKey(id);
         if (i > 0) {
-            apiResponse = APIResponse.success("删除成功");
+            apiResponse = APIResponse.deleted();
         } else {
-            apiResponse = APIResponse.fail("删除失败");
+            apiResponse = APIResponse.fail();
         }
         return apiResponse;
     }
@@ -119,9 +116,9 @@ public class RoleServiceImpl implements RoleService {
         role.setPsIds(rids);
         int i = roleMapper.updateByPrimaryKeySelective(role);
         if (i > 0) {
-            apiResponse = APIResponse.success("更新成功");
+            apiResponse = APIResponse.updated();
         } else {
-            apiResponse = APIResponse.fail("更新失败");
+            apiResponse = APIResponse.fail();
         }
         return apiResponse;
     }
@@ -131,7 +128,6 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleMapper.selectByPrimaryKey(id);
         // 当前角色所有的权限id
         List<String> psIdList = Arrays.asList(role.getPsIds().split(","));
-        log.info("所有权限：" + JSONArray.toJSONString(psIdList));
         // 获取要删除的权限列表
         List<Integer> permissionIds = new ArrayList<>();
         for (String permissionId : psIdList) {
@@ -140,13 +136,11 @@ public class RoleServiceImpl implements RoleService {
         List<MenusDTO> menusDTOList = permissionMapper.allMenuList(permissionIds);
 
         List<String> deleteList = getDeleteList(rightId, menusDTOList);
-        log.info("要删除的权限：" + JSONArray.toJSONString(deleteList));
         // 新的权限id列表
         List<String> newPsIdList = (List<String>) CollectionUtils.subtract(psIdList, deleteList);
         StringBuilder stringBuilder = new StringBuilder();
         newPsIdList.forEach(psId -> stringBuilder.append(psId).append(","));
         role.setPsIds(stringBuilder.substring(0, stringBuilder.length() > 0 ? stringBuilder.length() - 1 : stringBuilder.length()));
-        log.info("删除后的权限：" + role.getPsIds());
         roleMapper.updateByPrimaryKeySelective(role);
         return APIResponse.success(getRolePermission(role).getChildren());
     }

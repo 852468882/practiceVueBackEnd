@@ -22,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public APIResponse<PageInfo<CategoryDTO>> goodsCategoryDataList(@RequestParam String type, CategoryDTO categoryDTO) {
+    public APIResponse<PageInfo<CategoryDTO>> goodsCategoryDataList(@RequestParam(required = false) String type, CategoryDTO categoryDTO) {
         return APIResponse.success(categoryService.goodsCategoryDataList(type, categoryDTO));
     }
 

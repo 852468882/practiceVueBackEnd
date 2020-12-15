@@ -1,6 +1,5 @@
 package com.example.practicevue.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.practicevue.common.APIResponse;
 import com.example.practicevue.entity.Category;
 import com.example.practicevue.mapper.CategoryMapper;
@@ -8,7 +7,6 @@ import com.example.practicevue.model.CategoryDTO;
 import com.example.practicevue.service.CategoryService;
 import com.example.practicevue.utils.PageHelperUtil;
 import com.github.pagehelper.PageInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,29 +22,31 @@ import java.util.List;
  * @date 2020/12/4
  */
 @Service
-@Slf4j
 public class CategoryServiceImpl implements CategoryService {
     @Resource
     private CategoryMapper categoryMapper;
 
     @Override
     public PageInfo<CategoryDTO> goodsCategoryDataList(String type, CategoryDTO categoryDTO) {
-        log.info(JSONObject.toJSONString(categoryDTO));
         Integer pageNum = categoryDTO.getPageNum();
         Integer pageSize = categoryDTO.getPageSize();
+        if (StringUtils.isBlank(type)){
+            type = "default";
+        }
         switch (type) {
             case "1":
                 return PageHelperUtil.page(pageNum, pageSize, () -> categoryMapper.getSuperCategories());
             case "2":
                 return new PageInfo<>(getGoodsCategoryDataList(1));
-            default:
+            case "3":
                 return PageHelperUtil.page(pageNum, pageSize, () -> getGoodsCategoryDataList(1, 2));
+            default:
+                return new PageInfo<>(getGoodsCategoryDataList(1, 2));
         }
     }
 
     @Override
     public APIResponse<Category> createGoodsCategory(Category category) {
-        log.info("分类名称：{}；分类父ID：{}；分类层级：{}", category.getName(), category.getPid(), category.getLevel());
         APIResponse<Category> apiResponse = validateCreateGoodsCategory(category);
         if (apiResponse.getStatus() == 200) {
             int i = categoryMapper.insertSelective(category);
@@ -83,7 +83,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public APIResponse<Category> deleteOrRecoveryGoodsCategory(Integer id, Boolean isDelete) {
-        log.info("操作：{}；ID：{}", isDelete ? "删除" : "恢复", id);
         APIResponse<Category> apiResponse;
 
         Example example = new Example(Category.class);
@@ -92,7 +91,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         if (isDelete) {
             List<Integer> deleteIds = getDeleteIds(id, allCategories);
-            log.info("删除ID列表：" + deleteIds.toString());
             int i = categoryMapper.deleteOrRecoveryCategoriesByIds(deleteIds, 1);
             if (i > 0) {
                 apiResponse = APIResponse.ok();
@@ -101,7 +99,6 @@ public class CategoryServiceImpl implements CategoryService {
             }
         } else {
             List<Integer> recoveryIds = getRecoveryIds(id, allCategories);
-            log.info("恢复ID列表：" + recoveryIds.toString());
             int i = categoryMapper.deleteOrRecoveryCategoriesByIds(recoveryIds, 0);
             if (i > 0) {
                 apiResponse = APIResponse.ok();

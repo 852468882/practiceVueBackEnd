@@ -5,7 +5,6 @@ import com.example.practicevue.entity.GoodsAttr;
 import com.example.practicevue.mapper.GoodsAttrMapper;
 import com.example.practicevue.model.GoodsAttrDTO;
 import com.example.practicevue.service.AttributeService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,11 +15,11 @@ import java.util.List;
  * @date 2020/12/4
  */
 @Service
-@Slf4j
 public class AttributeServiceImpl implements AttributeService {
 
     @Resource
     private GoodsAttrMapper goodsAttrMapper;
+
     /**
      * 参数列表
      *
@@ -51,21 +50,24 @@ public class AttributeServiceImpl implements AttributeService {
         goodsAttr.setName(goodsAttrDTO.getName());
         goodsAttr.setSel(goodsAttrDTO.getSel());
         goodsAttr.setWrite("only".equals(goodsAttrDTO.getSel()) ? "manual" : "list");
-        goodsAttr.setVals(goodsAttrDTO.getVals());
-        goodsAttrMapper.insertSelective(goodsAttr);
-        return APIResponse.success(goodsAttr);
+        goodsAttr.setVals(goodsAttrDTO.getVals() == null ? "" : goodsAttrDTO.getVals());
+        int i = goodsAttrMapper.insertSelective(goodsAttr);
+        if (i > 0) {
+            return APIResponse.created();
+        } else {
+            return APIResponse.fail();
+        }
     }
 
     /**
      * 删除参数
      *
      * @param id     分类 ID
-     * @param attrId attrId参数 ID
+     * @param attrId 参数 ID
      * @return 删除的属性
      */
     @Override
     public APIResponse<GoodsAttr> deleteAttribute(Integer id, Integer attrId) {
-        log.info("分类ID：{}，参数ID：{}", id, attrId);
         goodsAttrMapper.deleteByPrimaryKey(attrId);
         return APIResponse.deleted();
     }
@@ -81,7 +83,8 @@ public class AttributeServiceImpl implements AttributeService {
      */
     @Override
     public APIResponse<GoodsAttr> selectAttributeById(Integer id, Integer attrId, String sel, String vals) {
-        return null;
+        GoodsAttr goodsAttr = goodsAttrMapper.selectByPrimaryKey(attrId);
+        return APIResponse.success(goodsAttr);
     }
 
     /**
