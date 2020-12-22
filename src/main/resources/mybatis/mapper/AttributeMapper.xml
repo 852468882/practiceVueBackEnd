@@ -11,4 +11,18 @@
     <result column="add_price" jdbcType="DECIMAL" property="addPrice" />
     <result column="attr_value" jdbcType="LONGVARCHAR" property="attrValue" />
   </resultMap>
+
+  <resultMap id="AttributeDTOMap" type="com.example.practicevue.model.AttributeDTO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="attr_id" jdbcType="SMALLINT" property="attrId" />
+    <result column="attr_value" jdbcType="LONGVARCHAR" property="attrValue" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="List">
+    insert into sp_attribute (goods_id, attr_id, attr_value) values
+    <foreach collection="list" separator="," item="i">
+      (#{i.goodsId}, #{i.attrId}, #{i.attrValue})
+    </foreach>
+  </insert>
 </mapper>

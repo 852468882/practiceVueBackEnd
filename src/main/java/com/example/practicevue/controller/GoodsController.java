@@ -25,7 +25,7 @@ public class GoodsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public APIResponse<GoodsDTO> createGoods(GoodsDTO goodsDTO){
+    public APIResponse<GoodsDTO> createGoods(@RequestBody GoodsDTO goodsDTO){
         return goodsService.createGoods(goodsDTO);
     }
 

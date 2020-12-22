@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -27,12 +26,6 @@ public class GoodsAttr {
     private String name;
 
     /**
-     * 外键，商品id
-     */
-    @Column(name = "`goods_id`")
-    private Integer goodsId;
-
-    /**
      * 外键，类型id
      */
     @Column(name = "`cat_id`")
@@ -49,12 +42,6 @@ public class GoodsAttr {
      */
     @Column(name = "`write`")
     private String write;
-
-    /**
-     * 该属性需要额外增加的价钱
-     */
-    @Column(name = "`add_price`")
-    private BigDecimal addPrice;
 
     /**
      * 删除时间标志

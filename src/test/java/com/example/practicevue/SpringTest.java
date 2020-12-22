@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.practicevue.entity.Permission;
 import com.example.practicevue.entity.Role;
 import com.example.practicevue.mapper.*;
+import com.example.practicevue.model.GoodsDTO;
 import com.example.practicevue.model.MenusDTO;
 import com.example.practicevue.model.PermissionListDTO;
 import com.example.practicevue.model.RolePermissionDTO;
@@ -94,7 +95,9 @@ public class SpringTest {
     }
 
     @Test
-    public void updatesp_goods_attr(){
+    public void selectGoodsById(){
+        GoodsDTO goodsDTO = goodsMapper.selectGoodsById(1);
+        System.out.println(JSONObject.toJSONString(goodsDTO));
     }
 
 

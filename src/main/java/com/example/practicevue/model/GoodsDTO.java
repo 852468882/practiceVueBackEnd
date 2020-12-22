@@ -114,5 +114,5 @@ public class GoodsDTO extends BaseDTO{
      */
     private String category;
     private List<GoodsPicsDTO> pics;
-    private List<GoodsAttrDTO> attrs;
+    private List<AttributeDTO> attrs;
 }

@@ -2,10 +2,10 @@ package com.example.practicevue.service.impl;
 
 import com.example.practicevue.common.APIResponse;
 import com.example.practicevue.entity.Goods;
-import com.example.practicevue.entity.GoodsPics;
-import com.example.practicevue.mapper.GoodsAttrMapper;
+import com.example.practicevue.mapper.AttributeMapper;
 import com.example.practicevue.mapper.GoodsMapper;
 import com.example.practicevue.mapper.GoodsPicsMapper;
+import com.example.practicevue.model.AttributeDTO;
 import com.example.practicevue.model.GoodsDTO;
 import com.example.practicevue.model.GoodsPicsDTO;
 import com.example.practicevue.service.GoodsService;
@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author zcy
@@ -32,13 +30,14 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsPicsMapper goodsPicsMapper;
     @Resource
-    private GoodsAttrMapper goodsAttrMapper;
+    private AttributeMapper attributeMapper;
 
     @Override
     public PageInfo<Goods> goodsList(String query, GoodsDTO goodsDTO) {
         Example example = new Example(Goods.class);
         example.selectProperties("id", "name", "price", "number", "weight", "state", "addTime", "updTime", "hotNumber", "isPromote");
-        example.createCriteria().andLike("name", "%" + query + "%");
+        example.createCriteria().andLike("name", "%" + query + "%")
+                .andEqualTo("isDel", "0");
         return PageHelperUtil.page(goodsDTO.getPageNum(), goodsDTO.getPageSize(), () -> goodsMapper.selectByExample(example));
     }
 
@@ -62,16 +61,18 @@ public class GoodsServiceImpl implements GoodsService {
         goodsMapper.insertSelective(goods);
 
         if (CollectionUtils.isNotEmpty(goodsDTO.getPics())){
-            List<GoodsPics> pics = new ArrayList<>();
             for (GoodsPicsDTO pic : goodsDTO.getPics()) {
-                GoodsPics goodsPics = new GoodsPics();
-                goodsPics.setGoodsId(goods.getId());
-                // TODO: 2020/12/7 为图片路径赋值
-                pics.add(goodsPics);
+                pic.setGoodsId(goods.getId());
             }
-            goodsPicsMapper.batchInsert(pics);
+            goodsPicsMapper.batchInsert(goodsDTO.getPics());
         }
-        // TODO: 2020/12/8 添加属性
+
+        if (CollectionUtils.isNotEmpty(goodsDTO.getAttrs())){
+            for (AttributeDTO attr : goodsDTO.getAttrs()) {
+                attr.setGoodsId(goods.getId());
+            }
+            attributeMapper.batchInsert(goodsDTO.getAttrs());
+        }
         return APIResponse.created();
     }
 

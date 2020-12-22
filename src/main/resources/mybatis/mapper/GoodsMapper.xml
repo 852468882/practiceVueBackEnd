@@ -32,24 +32,25 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="weight" jdbcType="INTEGER" property="weight" />
-    <result column="introduce" jdbcType="LONGVARCHAR" property="introduce" />
-    <result column="big_logo" jdbcType="CHAR" property="bigLogo" />
-    <result column="small_logo" jdbcType="CHAR" property="smallLogo" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
     <result column="hot_number" jdbcType="INTEGER" property="hotNumber" />
     <result column="is_promote" jdbcType="INTEGER" property="isPromote" />
+    <result column="cat_one_id" jdbcType="INTEGER" property="catOneId" />
+    <result column="cat_two_id" jdbcType="INTEGER" property="catTwoId" />
+    <result column="cat_three_id" jdbcType="INTEGER" property="catThreeId" />
     <collection property="pics" ofType="com.example.practicevue.model.GoodsPicsDTO">
       <result column="pics_id" jdbcType="INTEGER" property="id" />
       <result column="id" jdbcType="INTEGER" property="goodsId" />
       <result column="big" jdbcType="CHAR" property="big" />
       <result column="mid" jdbcType="CHAR" property="mid" />
       <result column="small" jdbcType="CHAR" property="small" />
+      <result column="pic" jdbcType="VARCHAR" property="pic" />
     </collection>
     <collection property="attrs" ofType="com.example.practicevue.model.GoodsAttrDTO">
-      <result column="attr_id" jdbcType="INTEGER" property="id" />
       <result column="id" jdbcType="INTEGER" property="goodsId" />
+      <result column="attr_id" jdbcType="INTEGER" property="id" />
       <result column="attr_value" jdbcType="LONGVARCHAR" property="attrValue" />
       <result column="add_price" jdbcType="DECIMAL" property="addPrice" />
       <result column="attr_name" jdbcType="VARCHAR" property="name" />
@@ -66,33 +67,31 @@
       g.price,
       g.number,
       g.weight,
-      g.introduce,
-      g.big_logo,
-      g.small_logo,
       g.state,
       g.add_time,
       g.upd_time,
       g.hot_number,
       g.is_promote,
-
-      gp.id pics_id,
-      gp.big,
-      gp.mid,
-      gp.small,
-
-      ga.attr_id,
-      ga.attr_value,
-      ga.add_price,
-
-      a.`name` attr_name,
-      a.sel,
-      a.`write`,
-      a.vals
+      g.cat_one_id,
+      g.cat_two_id,
+      g.cat_three_id,
+      p.id pics_id,
+      p.big,
+      p.mid,
+      p.small,
+      p.pic,
+      a.attr_id,
+      a.attr_value,
+      a.add_price,
+      ga.`name` attr_name,
+      ga.sel,
+      ga.`write`,
+      ga.vals
     FROM
       `sp_goods` g
-      LEFT JOIN sp_goods_pics gp ON gp.goods_id = g.id
-      LEFT JOIN sp_goods_attr ga ON ga.goods_id = g.id
-      LEFT JOIN sp_attribute a ON ga.attr_id = a.id
+        LEFT JOIN sp_goods_pics p ON p.goods_id = g.id
+        LEFT JOIN sp_attribute a ON a.goods_id = g.id
+        LEFT JOIN sp_goods_attr ga ON ga.id = a.attr_id
     WHERE
       g.id = #{id}
   </select>

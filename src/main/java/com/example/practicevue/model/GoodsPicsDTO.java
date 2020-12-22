@@ -29,4 +29,6 @@ public class GoodsPicsDTO extends BaseDTO{
      * 相册小图50*50
      */
     private String small;
+
+    private String pic;
 }

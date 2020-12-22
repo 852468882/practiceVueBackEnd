@@ -7,20 +7,13 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="cat_id" jdbcType="INTEGER" property="catId" />
     <result column="sel" jdbcType="CHAR" property="sel" />
     <result column="write" jdbcType="CHAR" property="write" />
-    <result column="add_price" jdbcType="DECIMAL" property="addPrice" />
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
     <result column="vals" jdbcType="LONGVARCHAR" property="vals" />
   </resultMap>
 
-    <insert id="batchInsert" parameterType="List">
-        insert into sp_goods_attr id, goods_id, attr_id, attr_value
-        values
-        <foreach collection="list" item="attr" separator=",">
-            (#{attr.id},#{attr.goodsId},#{attr.attrId},#{attr.attrValue})
-        </foreach>
-    </insert>
+
+
 </mapper>

@@ -50,6 +50,8 @@ public class CommonTest {
 
     @Test
     public void t4(){
-
+        String url = "http://localhost:7777/upload";
+        String uri = "/upload";
+        System.out.println(url.substring(0, url.length() - uri.length()));
     }
 }

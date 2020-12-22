@@ -1,5 +1,6 @@
 package com.example.practicevue.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -72,18 +73,21 @@ public class Goods {
      * 添加商品时间
      */
     @Column(name = "`add_time`")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date addTime;
 
     /**
      * 修改商品时间
      */
     @Column(name = "`upd_time`")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updTime;
 
     /**
      * 软删除标志字段
      */
     @Column(name = "`delete_time`")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date deleteTime;
 
     /**

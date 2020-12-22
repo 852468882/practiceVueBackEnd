@@ -97,7 +97,8 @@ public class AttributeServiceImpl implements AttributeService {
      */
     @Override
     public APIResponse<GoodsAttr> editAttribute(Integer id, Integer attrId, GoodsAttr goodsAttr) {
-        goodsAttrMapper.updateByPrimaryKey(goodsAttr);
+        goodsAttr.setId(attrId);
+        goodsAttrMapper.updateByPrimaryKeySelective(goodsAttr);
         return APIResponse.updated();
     }
 }

@@ -10,10 +10,11 @@
         <result column="big" jdbcType="CHAR" property="big"/>
         <result column="mid" jdbcType="CHAR" property="mid"/>
         <result column="small" jdbcType="CHAR" property="small"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
     </resultMap>
 
     <insert id="batchInsert" parameterType="list">
-        insert into sp_goods_pics id, goods_id
+        insert into sp_goods_pics (id, goods_id)
         values
         <foreach collection="list" item="pics" separator=",">
             (#{pics.id},#{pics.goodsId})

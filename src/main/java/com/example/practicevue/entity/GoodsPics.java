@@ -1,7 +1,11 @@
 package com.example.practicevue.entity;
 
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Table(name = "`sp_goods_pics`")
@@ -37,4 +41,7 @@ public class GoodsPics {
      */
     @Column(name = "`small`")
     private String small;
+
+    @Column(name = "`pic`")
+    private String pic;
 }
