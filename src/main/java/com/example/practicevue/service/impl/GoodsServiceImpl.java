@@ -1,6 +1,7 @@
 package com.example.practicevue.service.impl;
 
 import com.example.practicevue.common.APIResponse;
+import com.example.practicevue.entity.Attribute;
 import com.example.practicevue.entity.Goods;
 import com.example.practicevue.mapper.AttributeMapper;
 import com.example.practicevue.mapper.GoodsMapper;
@@ -18,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zcy
@@ -92,6 +94,27 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setWeight(goodsDTO.getWeight());
         goods.setIntroduce(goodsDTO.getIntroduce());
         goodsMapper.updateByPrimaryKeySelective(goods);
+
+        List<AttributeDTO> attrs = goodsDTO.getAttrs();
+        if (CollectionUtils.isNotEmpty(attrs)){
+            attrs.forEach(attr -> {
+                Attribute attribute = new Attribute();
+                attribute.setGoodsId(id);
+                attribute.setAttrId(attr.getAttrId());
+                int i = attributeMapper.selectCount(attribute);
+
+                attribute.setAttrValue(attr.getAttrValue());
+                if (i == 0){
+                    attributeMapper.insertSelective(attribute);
+                } else {
+                    Example example = new Example(Attribute.class);
+                    example.createCriteria()
+                            .andEqualTo("goodsId", id)
+                            .andEqualTo("attrId", attr.getAttrId());
+                    attributeMapper.updateByExampleSelective(attribute, example);
+                }
+            });
+        }
 
         return APIResponse.updated();
     }

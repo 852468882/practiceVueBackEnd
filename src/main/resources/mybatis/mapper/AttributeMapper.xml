@@ -25,4 +25,10 @@
       (#{i.goodsId}, #{i.attrId}, #{i.attrValue})
     </foreach>
   </insert>
+
+  <update id="batchUpdate" parameterType="List">
+    <foreach collection="list" item="i" separator=";">
+      update sp_attribute set attr_value = #{i.attrValue} where goods_id = #{i.goodsId} and attr_id = #{i.attrId}
+    </foreach>
+  </update>
 </mapper>

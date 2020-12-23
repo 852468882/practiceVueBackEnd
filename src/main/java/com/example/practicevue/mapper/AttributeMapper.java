@@ -9,4 +9,6 @@ import java.util.List;
 public interface AttributeMapper extends Mapper<Attribute> {
 
     int batchInsert(List<AttributeDTO> attributeDTOList);
+
+    int batchUpdate(List<AttributeDTO> attributeDTOList);
 }

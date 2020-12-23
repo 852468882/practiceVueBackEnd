@@ -1,6 +1,7 @@
 package com.example.practicevue;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.practicevue.entity.Attribute;
 import com.example.practicevue.entity.Permission;
 import com.example.practicevue.entity.Role;
 import com.example.practicevue.mapper.*;
@@ -41,19 +42,19 @@ public class SpringTest {
     private CategoryMapper categoryMapper;
 
     @Test
-    public void t1(){
+    public void t1() {
         List<MenusDTO> leftMenus = permissionMapper.getLeftMenus();
         System.out.println(JSONObject.toJSONString(leftMenus));
     }
 
     @Test
-    public void t2(){
+    public void t2() {
         List<PermissionListDTO> list = permissionMapper.allPermissionList();
         System.out.println(JSONObject.toJSONString(list));
     }
 
     @Test
-    public void t3(){
+    public void t3() {
         List<RolePermissionDTO> rolePermissionDTOList = new ArrayList<>();
         List<Role> roles = roleMapper.selectAll();
         roles.forEach(role -> {
@@ -87,7 +88,7 @@ public class SpringTest {
     }
 
     @Test
-    public void t4(){
+    public void t4() {
         List<MenusDTO> menusDTOList = new ArrayList<>();
 
         List<String> strings = getdeleteList("101");
@@ -95,19 +96,29 @@ public class SpringTest {
     }
 
     @Test
-    public void selectGoodsById(){
+    public void selectGoodsById() {
         GoodsDTO goodsDTO = goodsMapper.selectGoodsById(1);
         System.out.println(JSONObject.toJSONString(goodsDTO));
+    }
+
+    @Test
+    public void t6() {
+        Example example = new Example(Attribute.class);
+        example.createCriteria()
+                .andEqualTo("goodsId", "2")
+                .andEqualTo("attrId", "3807");
+        int i = attributeMapper.selectCountByExample(example);
+        System.out.println(i);
     }
 
 
     /**
      * 递归获取子菜单树
      */
-    private List<MenusDTO> childMenuTree(Integer parentId, List<MenusDTO> allMenuList){
+    private List<MenusDTO> childMenuTree(Integer parentId, List<MenusDTO> allMenuList) {
         List<MenusDTO> menuTree = new ArrayList<>();
         for (MenusDTO menusDTO : allMenuList) {
-            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(parentId)){
+            if (menusDTO.getPid() != 0 && menusDTO.getPid().equals(parentId)) {
                 MenusDTO menus = new MenusDTO();
                 menus.setId(menusDTO.getId());
                 menus.setAuthName(menusDTO.getAuthName());
@@ -129,13 +140,13 @@ public class SpringTest {
     /**
      * 递归获取删除权限列表
      */
-    private List<String> getdeleteList(String rightId){
+    private List<String> getdeleteList(String rightId) {
         List<String> deleteList = new ArrayList<>();
         deleteList.add(rightId);
         Example example = new Example(Permission.class);
         example.createCriteria().andEqualTo("pid", rightId);
         List<Permission> permissions = permissionMapper.selectByExample(example);
-        if (CollectionUtils.isNotEmpty(permissions)){
+        if (CollectionUtils.isNotEmpty(permissions)) {
             for (Permission permission : permissions) {
                 deleteList.addAll(getdeleteList(String.valueOf(permission.getId())));
             }
