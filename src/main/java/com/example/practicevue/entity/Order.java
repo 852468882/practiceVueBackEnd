@@ -1,5 +1,6 @@
 package com.example.practicevue.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -84,12 +85,14 @@ public class Order {
      * 记录生成时间
      */
     @Column(name = "`create_time`")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 记录修改时间
      */
     @Column(name = "`update_time`")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     /**

@@ -6,23 +6,25 @@ import com.example.practicevue.model.OrderDTO;
 import com.example.practicevue.service.OrderService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zcy
  * @date 2020/12/23
  */
 @RestController
-@RequestMapping(path = "/orders")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/orders", method = RequestMethod.GET)
     public APIResponse<PageInfo<Order>> orderList(OrderDTO orderDTO) {
         return orderService.getOrderList(orderDTO);
+    }
+
+    @RequestMapping(path = "/updateAddress/{id}", method = RequestMethod.POST)
+    public APIResponse<Order> updateConsigneeAddr(@PathVariable Integer id, @RequestBody String newAddress){
+        return orderService.updateConsigneeAddr(id, newAddress);
     }
 }
